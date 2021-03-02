@@ -27,14 +27,14 @@ function preload() {
   images[1] = loadImage('assets/Question 1.png');
   images[2] = loadImage('assets/Question 2.png');
   images[3] = loadImage('assets/Question 3.png');
-  // images[4] = loadImage('assets/Question 4.png');
-  // images[5] = loadImage('assets/Question 5.png');
-  // images[6] = loadImage('assets/Question 6.png');
-  // images[7] = loadImage('assets/Question 7.png');
-  // images[8] = loadImage('assets/End of Questions.png');
-  // images[9] = loadImage('assets/Bleached Reef.png');
-  // images[10] = loadImage('assets/Somewhat bleached reef.png');
-  // images[11] = loadImage('assets/Healthy reef.png');
+  images[4] = loadImage('assets/Question 4.png');
+  images[5] = loadImage('assets/Question 5.png');
+  images[6] = loadImage('assets/Question 6.png');
+  images[7] = loadImage('assets/Question 7.png');
+  images[8] = loadImage('assets/End of Questions Page.png');
+  images[9] = loadImage('assets/Bleached Reef.png');
+  images[10] = loadImage('assets/Somewhat bleached reef.png');
+  images[11] = loadImage('assets/Healthy reef.png');
 }
 
 function setup() {
@@ -60,8 +60,6 @@ function makeBeginButton() {
   beginButton.textColor = "#365673"; 
   beginButton.textSize = 37; 
 
-  // This should set the color to be off OR background transparent
-  //catButton.color = "#00000000";
 
   // This would give it a white background
   beginButton.color = "#8FD9CB";
@@ -112,7 +110,25 @@ questionThree = function() {
    image(images[3], 0, 0, windowWidth, windowHeight);
 }
 
+questionFour = function() {
+   image(images[4], 0, 0, windowWidth, windowHeight);
+}
 
+questionFive = function() {
+   image(images[5], 0, 0, windowWidth, windowHeight);
+}
+
+questionSix = function() {
+   image(images[6], 0, 0, windowWidth, windowHeight);
+}
+
+questionSeven = function() {
+   image(images[7], 0, 0, windowWidth, windowHeight);
+}
+
+endOfQuestions = function() {
+  image(images[8], 0, 0, windowWidth, windowHeight);
+}
 
 
 function keyTyped() {
@@ -147,6 +163,84 @@ function keyTyped() {
     }
     else if(key === 'd'){
       drawFunction = questionThree;
+    }
+  }
+
+  else if (drawFunction === questionThree){
+    if(key === 'a'){
+      drawFunction = questionFour;
+    }
+    else if(key === 'b'){
+      drawFunction = questionFour;
+      bleached++; 
+    }
+    else if(key === 'c'){
+      drawFunction = questionFour;
+      bleached++;  
+    }
+  }
+
+  else if (drawFunction === questionFour){
+    if(key === 'a'){
+      drawFunction = questionFive;
+      bleached++;  
+    }
+    else if(key === 'b'){
+      drawFunction = questionFive;
+      bleached++; 
+    }
+    else if(key === 'c'){
+      drawFunction = questionFive;
+    }
+  }
+
+  else if (drawFunction === questionFive){
+    if(key === 'a'){
+      drawFunction = questionSix;  
+    }
+    else if(key === 'b'){
+      drawFunction = questionSix;
+    }
+    else if(key === 'c'){
+      drawFunction = questionSix;
+      bleached++; 
+    }
+    else if(key === 'd'){
+      drawFunction = questionSix;
+    }
+    else if(key === 'e'){
+      drawFunction = questionSix;
+      bleached++; 
+    }
+  }
+
+  else if (drawFunction === questionSix){
+    if(key === 'a'){
+      drawFunction = questionSeven;  
+    }
+    else if(key === 'b'){
+      drawFunction = questionSeven;
+      bleached++; 
+    }
+    else if(key === 'c'){
+      drawFunction = questionSeven;
+    }
+  }
+
+  else if (drawFunction === questionSeven){
+    if(key === 'a'){
+      drawFunction = endOfQuestions;  
+    }
+    else if(key === 'b'){
+      drawFunction = endOfQuestions;
+    }
+    else if(key === 'c'){
+      drawFunction = endOfQuestions;
+      bleached++; 
+    }
+    else if(key === 'd'){
+      drawFunction = endOfQuestions;
+      bleached++; 
     }
   }
 }
