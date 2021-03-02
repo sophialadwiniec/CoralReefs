@@ -26,7 +26,8 @@ var coralImportanceButton;
 var bleachingButton;
 var helpButton; 
 var backButton;  
-
+var mantaRayButton;
+var turtleButton;  
 // load all images into an array
 function preload() {
   images[0] = loadImage('assets/Start Page.png');
@@ -45,10 +46,12 @@ function preload() {
   images[13] = loadImage('assets/Coral reef importance.png');
   images[14] = loadImage('assets/Bleaching.png');
   images[15] = loadImage('assets/How can I help.png');
+  images[16] = loadImage('assets/manta ray.png'); 
+  images[17] = loadImage('assets/turtle.png'); 
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1500, 850);
 
   drawFunction = start; 
 
@@ -59,12 +62,72 @@ function setup() {
   makeBleachingButton();
   makeHelpButton(); 
   makeBackButton(); 
+  makeMantaRayButton(); 
+  makeTurtleButton(); 
 }
 
 // Just draw the button
 function draw() {
   background(128);
   drawFunction(); 
+}
+
+function makeTurtleButton() {
+
+  // Create the clickable object
+  turtleButton = new Clickable();
+  
+  turtleButton.text = "";
+
+  turtleButton.image = images[17]; 
+
+  // // This would give it a white background
+  turtleButton.color = "#00000000";
+  turtleButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  turtleButton.width = 317; 
+  turtleButton.height = 211;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  turtleButton.locate( width * (1/32) - turtleButton.width * (1/32), height * (13/16) - turtleButton.height * (13/16));
+
+  // // Clickable callback functions, defined below
+  turtleButton.onPress = goToCoralReefButtonPressed;
+  turtleButton.onHover = beginButtonHover;
+  turtleButton.onOutside = animalButtonOnOutside;
+}
+
+function makeMantaRayButton() {
+
+  // Create the clickable object
+  mantaRayButton = new Clickable();
+  
+  mantaRayButton.text = "";
+
+  mantaRayButton.image = images[16]; 
+
+  // // This would give it a white background
+  mantaRayButton.color = "#00000000";
+  mantaRayButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  mantaRayButton.width = 242; 
+  mantaRayButton.height = 156;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  mantaRayButton.locate( width * (1/32) - mantaRayButton.width * (1/32), height * (1/3) - mantaRayButton.height * (1/3));
+
+  // // Clickable callback functions, defined below
+  mantaRayButton.onPress = goToCoralReefButtonPressed;
+  mantaRayButton.onHover = beginButtonHover;
+  mantaRayButton.onOutside = animalButtonOnOutside;
+}
+
+animalButtonOnOutside = function () {
+  this.color = "#00000000";
 }
 
 function makeBackButton() {
@@ -108,7 +171,7 @@ function makeHelpButton() {
   helpButton.color = "#8FD9CB";
 
   // // set width + height to image size
-  helpButton.width = 400;
+  helpButton.width = 380;
   helpButton.height = 62;
 
   // // set to middle of screen, since we are drawing from the corners, we need to make an
@@ -139,7 +202,7 @@ function makeBleachingButton() {
   bleachingButton.color = "#8FD9CB";
 
   // // set width + height to image size
-  bleachingButton.width = 400;
+  bleachingButton.width = 380;
   bleachingButton.height = 62;
 
   // // set to middle of screen, since we are drawing from the corners, we need to make an
@@ -170,7 +233,7 @@ function makeCoralImportanceButton() {
   coralImportanceButton.color = "#8FD9CB";
 
   // // set width + height to image size
-  coralImportanceButton.width = 400;
+  coralImportanceButton.width = 380;
   coralImportanceButton.height = 62;
 
   // // set to middle of screen, since we are drawing from the corners, we need to make an
@@ -300,77 +363,79 @@ beginButtonOnOutside = function () {
 }
 
 start = function() {
-   image(images[0], 0, 0, windowWidth, windowHeight);
+   image(images[0], 0, 0, width, height);
    beginButton.draw();
 }
 
 questionOne = function() {
-   image(images[1], 0, 0, windowWidth, windowHeight);
+   image(images[1], 0, 0, width, height);
 }
 
 questionTwo = function() {
-   image(images[2], 0, 0, windowWidth, windowHeight);
+   image(images[2], 0, 0, width, height);
 }
 
 questionThree = function() {
-   image(images[3], 0, 0, windowWidth, windowHeight);
+   image(images[3], 0, 0, width, height);
 }
 
 questionFour = function() {
-   image(images[4], 0, 0, windowWidth, windowHeight);
+   image(images[4], 0, 0, width, height);
 }
 
 questionFive = function() {
-   image(images[5], 0, 0, windowWidth, windowHeight);
+   image(images[5], 0, 0, width, height);
 }
 
 questionSix = function() {
-   image(images[6], 0, 0, windowWidth, windowHeight);
+   image(images[6], 0, 0, width, height);
 }
 
 questionSeven = function() {
-   image(images[7], 0, 0, windowWidth, windowHeight);
+   image(images[7], 0, 0, width, height);
 }
 
 endOfQuestions = function() {
-  image(images[8], 0, 0, windowWidth, windowHeight);
+  image(images[8], 0, 0, width, height);
   coralReefButton.draw();
 }
 
 bleachedReef = function() {
-  image(images[9], 0, 0, windowWidth, windowHeight);
+  image(images[9], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
 somewhatBleachedReef = function() {
-  image(images[10], 0, 0, windowWidth, windowHeight);
+  image(images[10], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
 healthyReef = function() {
-  image(images[11], 0, 0, windowWidth, windowHeight);
+  image(images[11], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
 coralReef = function() {
-  image(images[12], 0, 0, windowWidth, windowHeight);
+  image(images[12], 0, 0, width, height);
   coralImportanceButton.draw();
   bleachingButton.draw(); 
   helpButton.draw(); 
+  mantaRayButton.draw(); 
+  turtleButton.draw(); 
 }
 
 coralReefImportance = function(){
-  image(images[13], 0, 0, windowWidth, windowHeight);
+  image(images[13], 0, 0, width, height);
   backButton.draw(); 
 }
 
 whatIsBleaching = function(){
-  image(images[14], 0, 0, windowWidth, windowHeight);
+  image(images[14], 0, 0, width, height);
   backButton.draw(); 
 }
 
 helpPage = function(){
-  image(images[15], 0, 0, windowWidth, windowHeight);
+  image(images[15], 0, 0, width, height);
   backButton.draw(); 
 }
 
@@ -383,7 +448,7 @@ function keyTyped() {
     }
     else if(key === 'b'){
       bleached++;  
-      print('The value of bleached is ' + bleached);
+      print('the width is' + width + "the height is: " + height);
       drawFunction = questionTwo;
     }
     else if(key === 'c'){
