@@ -15,11 +15,17 @@ var images = [];
 var drawFunction;
 
 // keeps track of answers 
-var bleached; 
+var bleached = 0; 
 
 
-// A Clickable object
+//Clickable objects
 var beginButton;
+var coralReefButton; 
+var goToCoralReefButton; 
+var coralImportanceButton; 
+var bleachingButton;
+var helpButton; 
+var backButton;  
 
 // load all images into an array
 function preload() {
@@ -35,6 +41,10 @@ function preload() {
   images[9] = loadImage('assets/Bleached Reef.png');
   images[10] = loadImage('assets/Somewhat bleached reef.png');
   images[11] = loadImage('assets/Healthy reef.png');
+  images[12] = loadImage('assets/Coral Reef.png');
+  images[13] = loadImage('assets/Coral reef importance.png');
+  images[14] = loadImage('assets/Bleaching.png');
+  images[15] = loadImage('assets/How can I help.png');
 }
 
 function setup() {
@@ -43,12 +53,208 @@ function setup() {
   drawFunction = start; 
 
   makeBeginButton();
+  makeCoralReefButton(); 
+  makeGoToCoralReefButton(); 
+  makeCoralImportanceButton();
+  makeBleachingButton();
+  makeHelpButton(); 
+  makeBackButton(); 
 }
 
 // Just draw the button
 function draw() {
   background(128);
   drawFunction(); 
+}
+
+function makeBackButton() {
+
+  // Create the clickable object
+  backButton = new Clickable();
+  
+  backButton.text = "Back";
+  backButton.textColor = "#365673"; 
+  backButton.textSize = 25; 
+
+
+  // // This would give it a white background
+  backButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  backButton.width = 100;
+  backButton.height = 40;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  backButton.locate( width * (1/32) , height * (15/16));
+
+  // // Clickable callback functions, defined below
+  backButton.onPress = goToCoralReefButtonPressed;
+  backButton.onHover = beginButtonHover;
+  backButton.onOutside = beginButtonOnOutside;
+}
+
+function makeHelpButton() {
+
+  // Create the clickable object
+  helpButton = new Clickable();
+  
+  helpButton.text = "How can I help?";
+  helpButton.textColor = "#365673"; 
+  helpButton.textSize = 25; 
+
+
+  // // This would give it a white background
+  helpButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  helpButton.width = 400;
+  helpButton.height = 62;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  helpButton.locate( width * (23/32) , height * (7/8));
+
+  // // Clickable callback functions, defined below
+  helpButton.onPress = helpButtonPressed;
+  helpButton.onHover = beginButtonHover;
+  helpButton.onOutside = beginButtonOnOutside;
+}
+
+helpButtonPressed = function () {
+  drawFunction = helpPage; 
+}
+
+function makeBleachingButton() {
+
+  // Create the clickable object
+  bleachingButton = new Clickable();
+  
+  bleachingButton.text = "What is bleaching?";
+  bleachingButton.textColor = "#365673"; 
+  bleachingButton.textSize = 25; 
+
+
+  // // This would give it a white background
+  bleachingButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  bleachingButton.width = 400;
+  bleachingButton.height = 62;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  bleachingButton.locate( width * (12/32) , height * (7/8));
+
+  // // Clickable callback functions, defined below
+  bleachingButton.onPress = bleachingButtonPressed;
+  bleachingButton.onHover = beginButtonHover;
+  bleachingButton.onOutside = beginButtonOnOutside;
+}
+
+bleachingButtonPressed = function () {
+  drawFunction = whatIsBleaching; 
+}
+
+function makeCoralImportanceButton() {
+
+  // Create the clickable object
+  coralImportanceButton = new Clickable();
+  
+  coralImportanceButton.text = "Why are coral reefs important?";
+  coralImportanceButton.textColor = "#365673"; 
+  coralImportanceButton.textSize = 25; 
+
+
+  // // This would give it a white background
+  coralImportanceButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  coralImportanceButton.width = 400;
+  coralImportanceButton.height = 62;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  coralImportanceButton.locate( width * (1/32) , height * (7/8));
+
+  // // Clickable callback functions, defined below
+  coralImportanceButton.onPress = coralImportanceButtonPressed;
+  coralImportanceButton.onHover = beginButtonHover;
+  coralImportanceButton.onOutside = beginButtonOnOutside;
+}
+
+coralImportanceButtonPressed = function () {
+  drawFunction = coralReefImportance; 
+}
+
+function makeGoToCoralReefButton() {
+
+  // Create the clickable object
+  goToCoralReefButton = new Clickable();
+  
+  goToCoralReefButton.text = "Click here to go to the interactive reef";
+  goToCoralReefButton.textColor = "#365673"; 
+  goToCoralReefButton.textSize = 37; 
+
+
+  // // This would give it a white background
+  goToCoralReefButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  goToCoralReefButton.width = 739;
+  goToCoralReefButton.height = 84;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  goToCoralReefButton.locate( width/2 - goToCoralReefButton.width/2 , height * (3/4));
+
+  // // Clickable callback functions, defined below
+  goToCoralReefButton.onPress = goToCoralReefButtonPressed;
+  goToCoralReefButton.onHover = beginButtonHover;
+  goToCoralReefButton.onOutside = beginButtonOnOutside;
+}
+
+goToCoralReefButtonPressed = function () {
+  drawFunction = coralReef; 
+}
+
+function makeCoralReefButton() {
+
+  // Create the clickable object
+  coralReefButton = new Clickable();
+  
+  coralReefButton.text = "Click here to see your coral reef!";
+  coralReefButton.textColor = "#365673"; 
+  coralReefButton.textSize = 37; 
+
+
+  // // This would give it a white background
+  coralReefButton.color = "#8FD9CB";
+
+  // // set width + height to image size
+  coralReefButton.width = 994;
+  coralReefButton.height = 90;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  coralReefButton.locate( width/2 - coralReefButton.width/2 , height * (3/4));
+
+  // // Clickable callback functions, defined below
+  coralReefButton.onPress = coralReefButtonPressed;
+  coralReefButton.onHover = beginButtonHover;
+  coralReefButton.onOutside = beginButtonOnOutside;
+}
+
+coralReefButtonPressed = function () {
+  print('The value of bleached is ' + bleached);
+  if(bleached <= 7 && bleached >= 5){
+    drawFunction = bleachedReef; 
+  } else if(bleached <= 4 && bleached >= 2){
+    drawFunction = somewhatBleachedReef; 
+  }
+  else {
+    drawFunction = healthyReef; 
+  }
 }
 
 function makeBeginButton() {
@@ -128,22 +334,62 @@ questionSeven = function() {
 
 endOfQuestions = function() {
   image(images[8], 0, 0, windowWidth, windowHeight);
+  coralReefButton.draw();
 }
+
+bleachedReef = function() {
+  image(images[9], 0, 0, windowWidth, windowHeight);
+  goToCoralReefButton.draw(); 
+}
+
+somewhatBleachedReef = function() {
+  image(images[10], 0, 0, windowWidth, windowHeight);
+  goToCoralReefButton.draw(); 
+}
+
+healthyReef = function() {
+  image(images[11], 0, 0, windowWidth, windowHeight);
+  goToCoralReefButton.draw(); 
+}
+
+coralReef = function() {
+  image(images[12], 0, 0, windowWidth, windowHeight);
+  coralImportanceButton.draw();
+  bleachingButton.draw(); 
+  helpButton.draw(); 
+}
+
+coralReefImportance = function(){
+  image(images[13], 0, 0, windowWidth, windowHeight);
+  backButton.draw(); 
+}
+
+whatIsBleaching = function(){
+  image(images[14], 0, 0, windowWidth, windowHeight);
+  backButton.draw(); 
+}
+
+helpPage = function(){
+  image(images[15], 0, 0, windowWidth, windowHeight);
+  backButton.draw(); 
+}
+
 
 
 function keyTyped() {
   if (drawFunction === questionOne){
     if(key === 'a'){
       drawFunction = questionTwo;
-      bleached++;  
     }
     else if(key === 'b'){
-      drawFunction = questionTwo;
       bleached++;  
+      print('The value of bleached is ' + bleached);
+      drawFunction = questionTwo;
     }
     else if(key === 'c'){
-      drawFunction = questionTwo;
       bleached++;  
+      print('The value of bleached is ' + bleached);
+      drawFunction = questionTwo;
     }
     else if(key === 'd'){
       drawFunction = questionTwo;
@@ -158,10 +404,11 @@ function keyTyped() {
       drawFunction = questionThree;
     }
     else if(key === 'c'){
-      drawFunction = questionThree;
       bleached++;  
+      drawFunction = questionThree;
     }
     else if(key === 'd'){
+      bleached++;  
       drawFunction = questionThree;
     }
   }
@@ -171,23 +418,23 @@ function keyTyped() {
       drawFunction = questionFour;
     }
     else if(key === 'b'){
+      bleached++;  
       drawFunction = questionFour;
-      bleached++; 
     }
     else if(key === 'c'){
-      drawFunction = questionFour;
       bleached++;  
+      drawFunction = questionFour;
     }
   }
 
   else if (drawFunction === questionFour){
     if(key === 'a'){
-      drawFunction = questionFive;
       bleached++;  
+      drawFunction = questionFive;
     }
     else if(key === 'b'){
+      bleached++;  
       drawFunction = questionFive;
-      bleached++; 
     }
     else if(key === 'c'){
       drawFunction = questionFive;
@@ -202,15 +449,15 @@ function keyTyped() {
       drawFunction = questionSix;
     }
     else if(key === 'c'){
-      drawFunction = questionSix;
       bleached++; 
+      drawFunction = questionSix;
     }
     else if(key === 'd'){
       drawFunction = questionSix;
     }
     else if(key === 'e'){
-      drawFunction = questionSix;
       bleached++; 
+      drawFunction = questionSix;
     }
   }
 
@@ -219,8 +466,8 @@ function keyTyped() {
       drawFunction = questionSeven;  
     }
     else if(key === 'b'){
-      drawFunction = questionSeven;
       bleached++; 
+      drawFunction = questionSeven;
     }
     else if(key === 'c'){
       drawFunction = questionSeven;
@@ -235,12 +482,12 @@ function keyTyped() {
       drawFunction = endOfQuestions;
     }
     else if(key === 'c'){
-      drawFunction = endOfQuestions;
       bleached++; 
+      drawFunction = endOfQuestions;
     }
     else if(key === 'd'){
+       bleached++; 
       drawFunction = endOfQuestions;
-      bleached++; 
     }
   }
 }
