@@ -27,7 +27,22 @@ var bleachingButton;
 var helpButton; 
 var backButton;  
 var mantaRayButton;
-var turtleButton;  
+var turtleButton; 
+var dolphinButton; 
+var jellyfishButton;
+var clownfishButton; 
+var octopusButton; 
+var crabButton; 
+var whaleSharkButton; 
+
+
+var turtleX = 1500 * (1/32) - 30; 
+var turtleY = 850 * (1/32) - 90; 
+
+var spongebob; 
+var jellyfish; 
+var jellyfishGroup; 
+
 // load all images into an array
 function preload() {
   images[0] = loadImage('assets/Start Page.png');
@@ -48,10 +63,30 @@ function preload() {
   images[15] = loadImage('assets/How can I help.png');
   images[16] = loadImage('assets/manta ray.png'); 
   images[17] = loadImage('assets/turtle.png'); 
+  images[18] = loadImage('assets/dolphin.png'); 
+  images[19] = loadImage('assets/jellyfish.png'); 
+  images[20] = loadImage('assets/clownfish.png'); 
+  images[21] = loadImage('assets/octopus.png'); 
+  images[22] = loadImage('assets/crab.png');
+  images[23] = loadImage('assets/whale shark.png');
+  images[24] = loadImage('assets/turtle page.png');
+  images[25] = loadImage('assets/jellyfish page.png');
+  images[26] = loadImage('assets/spongebob jellyfishing.png'); 
+  images[27] = loadImage('assets/cartoon jellyfish.png'); 
 }
 
 function setup() {
   createCanvas(1500, 850);
+
+  spongebob = createSprite(100, 100);
+  images[26].resize(300,300); 
+  spongebob.addAnimation('normal',images[26],images[26]); 
+
+  // jellyfish = createSprite(100,100); 
+  images[27].resize(130, 140); 
+  // jellyfish.addAnimation('normal',images[27],images[27]); 
+
+  jellyfishGroup = new Group(); 
 
   drawFunction = start; 
 
@@ -64,12 +99,186 @@ function setup() {
   makeBackButton(); 
   makeMantaRayButton(); 
   makeTurtleButton(); 
+  makeDolphinButton(); 
+  makeJellyfishButton(); 
+  makeClownfishButton(); 
+  makeOctopusButton(); 
+  makeCrabButton(); 
+  makeWhaleSharkButton(); 
 }
 
 // Just draw the button
 function draw() {
   background(128);
   drawFunction(); 
+}
+
+function makeWhaleSharkButton() {
+
+  // Create the clickable object
+  whaleSharkButton = new Clickable();
+  
+  whaleSharkButton.text = "";
+
+  whaleSharkButton.image = images[23]; 
+
+  // // This would give it a white background
+  whaleSharkButton.color = "#00000000";
+  whaleSharkButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  whaleSharkButton.width = 270; 
+  whaleSharkButton.height = 390;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  whaleSharkButton.locate( width * (31/32) - whaleSharkButton.width * (31/32), height * (1/128) - whaleSharkButton.height * (1/128));
+
+  // // Clickable callback functions, defined below
+  whaleSharkButton.onPress = goToCoralReefButtonPressed;
+  whaleSharkButton.onHover = beginButtonHover;
+  whaleSharkButton.onOutside = animalButtonOnOutside;
+}
+
+
+function makeCrabButton() {
+
+  // Create the clickable object
+  crabButton = new Clickable();
+  
+  crabButton.text = "";
+
+  crabButton.image = images[22]; 
+
+  // // This would give it a white background
+  crabButton.color = "#00000000";
+  crabButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  crabButton.width = 280; 
+  crabButton.height = 120;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  crabButton.locate( width * (31/32) - crabButton.width * (31/32), height * (26/32) - crabButton.height * (26/32));
+
+  // // Clickable callback functions, defined below
+  crabButton.onPress = goToCoralReefButtonPressed;
+  crabButton.onHover = beginButtonHover;
+  crabButton.onOutside = animalButtonOnOutside;
+}
+
+function makeOctopusButton() {
+
+  // Create the clickable object
+  octopusButton = new Clickable();
+  
+  octopusButton.text = "";
+
+  octopusButton.image = images[21]; 
+
+  // // This would give it a white background
+  octopusButton.color = "#00000000";
+  octopusButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  octopusButton.width = 290; 
+  octopusButton.height = 160;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  octopusButton.locate( width * (13/16) - octopusButton.width * (13/16), height * (1/2) - octopusButton.height * (1/2));
+
+  // // Clickable callback functions, defined below
+  octopusButton.onPress = goToCoralReefButtonPressed;
+  octopusButton.onHover = beginButtonHover;
+  octopusButton.onOutside = animalButtonOnOutside;
+}
+
+function makeClownfishButton() {
+
+  // Create the clickable object
+  clownfishButton = new Clickable();
+  
+  clownfishButton.text = "";
+
+  clownfishButton.image = images[20]; 
+
+  // // This would give it a white background
+  clownfishButton.color = "#00000000";
+  clownfishButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  clownfishButton.width = 200; 
+  clownfishButton.height = 100;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  clownfishButton.locate( width * (3/4) - clownfishButton.width * (3/4), height * (12/16) - clownfishButton.height * (12/16));
+
+  // // Clickable callback functions, defined below
+  clownfishButton.onPress = goToCoralReefButtonPressed;
+  clownfishButton.onHover = beginButtonHover;
+  clownfishButton.onOutside = animalButtonOnOutside;
+}
+
+function makeJellyfishButton() {
+
+  // Create the clickable object
+  jellyfishButton = new Clickable();
+  
+  jellyfishButton.text = "";
+
+  jellyfishButton.image = images[19]; 
+
+  // // This would give it a white background
+  jellyfishButton.color = "#00000000";
+  jellyfishButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  jellyfishButton.width = 278; 
+  jellyfishButton.height = 120;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  jellyfishButton.locate( width * (1/2) - jellyfishButton.width * (1/2), height * (3/4) - jellyfishButton.height * (3/4));
+
+  // // Clickable callback functions, defined below
+  jellyfishButton.onPress = jellyfishButtonPressed;
+  jellyfishButton.onHover = beginButtonHover;
+  jellyfishButton.onOutside = animalButtonOnOutside;
+}
+
+jellyfishButtonPressed = function () {
+  drawFunction = jellyfishPage; 
+}
+
+
+function makeDolphinButton() {
+
+  // Create the clickable object
+  dolphinButton = new Clickable();
+  
+  dolphinButton.text = "";
+
+  dolphinButton.image = images[18]; 
+
+  // // This would give it a white background
+  dolphinButton.color = "#00000000";
+  dolphinButton.strokeWeight = 0; 
+
+  // // set width + height to image size
+  dolphinButton.width = 401; 
+  dolphinButton.height = 266;
+
+  // // set to middle of screen, since we are drawing from the corners, we need to make an
+  // // additional calculation here
+  dolphinButton.locate( width * (1/2) - dolphinButton.width * (1/2), height * (1/4) - dolphinButton.height * (1/4));
+
+  // // Clickable callback functions, defined below
+  dolphinButton.onPress = goToCoralReefButtonPressed;
+  dolphinButton.onHover = beginButtonHover;
+  dolphinButton.onOutside = animalButtonOnOutside;
 }
 
 function makeTurtleButton() {
@@ -94,9 +303,13 @@ function makeTurtleButton() {
   turtleButton.locate( width * (1/32) - turtleButton.width * (1/32), height * (13/16) - turtleButton.height * (13/16));
 
   // // Clickable callback functions, defined below
-  turtleButton.onPress = goToCoralReefButtonPressed;
+  turtleButton.onPress = turtleButtonPressed;
   turtleButton.onHover = beginButtonHover;
   turtleButton.onOutside = animalButtonOnOutside;
+}
+
+turtleButtonPressed = function () {
+  drawFunction = turtlePage; 
 }
 
 function makeMantaRayButton() {
@@ -162,7 +375,7 @@ function makeHelpButton() {
   // Create the clickable object
   helpButton = new Clickable();
   
-  helpButton.text = "How can I help?";
+  helpButton.text = "How can you help?";
   helpButton.textColor = "#365673"; 
   helpButton.textSize = 25; 
 
@@ -422,6 +635,12 @@ coralReef = function() {
   helpButton.draw(); 
   mantaRayButton.draw(); 
   turtleButton.draw(); 
+  dolphinButton.draw(); 
+  jellyfishButton.draw(); 
+  clownfishButton.draw(); 
+  octopusButton.draw(); 
+  crabButton.draw(); 
+  whaleSharkButton.draw(); 
 }
 
 coralReefImportance = function(){
@@ -439,6 +658,53 @@ helpPage = function(){
   backButton.draw(); 
 }
 
+turtlePage = function(){
+  image(images[24], 0, 0, width, height);
+  image(images[17], turtleX, turtleY, 400, 300); 
+  backButton.draw(); 
+}
+
+jellyfishPage = function(){
+  image(images[25], 0, 0, width, height);
+  image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
+  
+  spongebob.velocity.x = (mouseX - spongebob.position.x)/10; 
+  spongebob.velocity.y = (mouseY - spongebob.position.y)/10; 
+  jellyfishGroup.overlap(spongebob, collect); 
+  drawSprites(); 
+  backButton.draw(); 
+}
+
+function collect(sprite)
+{
+  sprite.remove();
+}
+
+function keyPressed(){
+  if (drawFunction === turtlePage){
+    if(keyCode === UP_ARROW){
+      turtleY = turtleY - 30; 
+    }
+    else if(keyCode === DOWN_ARROW){
+      turtleY = turtleY + 30; 
+    }
+    else if(keyCode === RIGHT_ARROW){
+      turtleX = turtleX + 30; 
+    }
+    else if(keyCode === LEFT_ARROW){
+      turtleX = turtleX - 30; 
+    }
+  }
+  if (drawFunction === jellyfishPage){
+    if(keyCode === UP_ARROW){
+      for(var i = 0; i < 20; i++){
+        var jellyfishSingle = createSprite(random(0,width), random(0, height));
+        jellyfishSingle.addAnimation('normal',images[27],images[27]);  
+        jellyfishGroup.add(jellyfishSingle); 
+      }
+    }
+  }
+}
 
 
 function keyTyped() {
@@ -555,5 +821,6 @@ function keyTyped() {
       drawFunction = endOfQuestions;
     }
   }
+
 }
 

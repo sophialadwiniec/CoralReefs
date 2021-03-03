@@ -61,7 +61,7 @@ function Clickable() {
 	this.width = 100;		//Width of the clickable
 	this.height = 50;		//Height of the clickable
 	this.color = "#FFFFFF";		//Background color of the clickable
-	this.cornerRadius = 10;		//Corner radius of the clickable
+	this.cornerRadius = 30;		//Corner radius of the clickable
 	this.strokeWeight = 2;		//Stroke width of the clickable
 	this.stroke = "#000000";	//Border color of the clickable
 	this.text = "Press Me";		//Text of the clickable
@@ -69,6 +69,7 @@ function Clickable() {
 	this.textSize = 12;		//Size for the text shown
 	this.textFont = "sans-serif";	//Font for the text shown
 	this.textScaled = false;     //Scale the text with the size of the clickable
+	textStyle(BOLD); 
 	
 	// image options
 	this.image = null; // image object from p5loadimage()
