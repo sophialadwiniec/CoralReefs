@@ -39,9 +39,15 @@ var whaleSharkButton;
 var turtleX = 1500 * (1/32) - 30; 
 var turtleY = 850 * (1/32) - 90; 
 
+// sprites for mini games 
 var spongebob; 
 var jellyfish; 
 var jellyfishGroup; 
+var octopus; 
+var platform; 
+
+var gravity = 1; 
+var jump = 15; 
 
 // load all images into an array
 function preload() {
@@ -75,6 +81,7 @@ function preload() {
   images[27] = loadImage('assets/cartoon jellyfish.png'); 
   images[28] = loadImage('assets/octopus page.png'); 
   images[29] = loadImage('assets/octopus cartoon.png')
+  images[30] = loadImage('assets/platform.png')
 }
 
 function setup() {
@@ -84,9 +91,15 @@ function setup() {
   images[26].resize(300,300); 
   spongebob.addAnimation('normal',images[26],images[26]); 
 
-  // jellyfish = createSprite(100,100); 
   images[27].resize(130, 140); 
-  // jellyfish.addAnimation('normal',images[27],images[27]); 
+
+  octopus = createSprite(width * (1/2) - 150, height *(5/8)); 
+  images[29].resize(350,350); 
+  octopus.addAnimation('normal', images[29], images[29]); 
+
+  platform = createSprite(width * (1/2) - 150, 950); 
+  images[30].resize(200,90); 
+  platform.addAnimation('normal', images[30], images[30]); 
 
   jellyfishGroup = new Group(); 
 
@@ -673,17 +686,28 @@ turtlePage = function(){
 octopusPage = function(){
   image(images[28], 0, 0, width, height);
   image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
-  image(images[29], width * (1/2) - 200, height *(5/8), 350, 350);
+  spongebob.visible = false; 
+  octopus.visible = true; 
+  octopus.velocity.y += gravity; 
+  print('The value of octopus velocity is ' + octopus.velocity.y);
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+  drawSprites(); 
   backButton.draw(); 
 }
 
 jellyfishPage = function(){
   image(images[25], 0, 0, width, height);
   image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
-  
+  spongebob.visible = true; 
+  octopus.visible = false; 
   spongebob.velocity.x = (mouseX - spongebob.position.x)/10; 
   spongebob.velocity.y = (mouseY - spongebob.position.y)/10; 
   jellyfishGroup.overlap(spongebob, collect); 
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
   drawSprites(); 
   backButton.draw(); 
 }
@@ -715,6 +739,11 @@ function keyPressed(){
         jellyfishSingle.addAnimation('normal',images[27],images[27]);  
         jellyfishGroup.add(jellyfishSingle); 
       }
+    }
+  }
+  else if (drawFunction === octopusPage){
+    if(keyCode === UP_ARROW){
+      octopus.velocity.y = -jump; 
     }
   }
 }
