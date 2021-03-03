@@ -73,6 +73,8 @@ function preload() {
   images[25] = loadImage('assets/jellyfish page.png');
   images[26] = loadImage('assets/spongebob jellyfishing.png'); 
   images[27] = loadImage('assets/cartoon jellyfish.png'); 
+  images[28] = loadImage('assets/octopus page.png'); 
+  images[29] = loadImage('assets/octopus cartoon.png')
 }
 
 function setup() {
@@ -190,9 +192,13 @@ function makeOctopusButton() {
   octopusButton.locate( width * (13/16) - octopusButton.width * (13/16), height * (1/2) - octopusButton.height * (1/2));
 
   // // Clickable callback functions, defined below
-  octopusButton.onPress = goToCoralReefButtonPressed;
+  octopusButton.onPress = octopusButtonPressed;
   octopusButton.onHover = beginButtonHover;
   octopusButton.onOutside = animalButtonOnOutside;
+}
+
+octopusButtonPressed = function () {
+  drawFunction = octopusPage; 
 }
 
 function makeClownfishButton() {
@@ -664,6 +670,13 @@ turtlePage = function(){
   backButton.draw(); 
 }
 
+octopusPage = function(){
+  image(images[28], 0, 0, width, height);
+  image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
+  image(images[29], width * (1/2) - 200, height *(5/8), 350, 350);
+  backButton.draw(); 
+}
+
 jellyfishPage = function(){
   image(images[25], 0, 0, width, height);
   image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
@@ -695,7 +708,7 @@ function keyPressed(){
       turtleX = turtleX - 30; 
     }
   }
-  if (drawFunction === jellyfishPage){
+  else if (drawFunction === jellyfishPage){
     if(keyCode === UP_ARROW){
       for(var i = 0; i < 20; i++){
         var jellyfishSingle = createSprite(random(0,width), random(0, height));
