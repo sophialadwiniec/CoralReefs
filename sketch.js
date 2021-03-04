@@ -46,6 +46,7 @@ var jellyfishGroup;
 var clownfishGroup; 
 var octopus; 
 var platform; 
+var crab; 
 
 var gravity = 1; 
 var jump = 15; 
@@ -85,6 +86,10 @@ function preload() {
   images[30] = loadImage('assets/platform.png');
   images[31] = loadImage('assets/fish page.png'); 
   images[32] = loadImage('assets/nemo.png');
+  images[33] = loadImage('assets/crab page.png'); 
+  images[34] = loadImage('assets/mr.krabs.png'); 
+  images[35] = loadImage('assets/ray page.png'); 
+  images[36] = loadImage('assets/mini ray.png'); 
 }
 
 function setup() {
@@ -106,9 +111,17 @@ function setup() {
 
   images[32].resize(130,97); 
 
+  crab = createSprite(width * (1/2) - 150, height *(3/4)); 
+  images[22].resize(430,300); 
+  crab.addAnimation('normal', images[22], images[22])
+
+  images[34].resize(250,250); 
+
+
 
   jellyfishGroup = new Group(); 
   clownfishGroup = new Group(); 
+  rayGroup = new Group(); 
 
   drawFunction = start; 
 
@@ -185,9 +198,13 @@ function makeCrabButton() {
   crabButton.locate( width * (31/32) - crabButton.width * (31/32), height * (26/32) - crabButton.height * (26/32));
 
   // // Clickable callback functions, defined below
-  crabButton.onPress = goToCoralReefButtonPressed;
+  crabButton.onPress = crabButtonPressed;
   crabButton.onHover = beginButtonHover;
   crabButton.onOutside = animalButtonOnOutside;
+}
+
+crabButtonPressed = function () {
+  drawFunction = crabPage; 
 }
 
 function makeOctopusButton() {
@@ -364,13 +381,17 @@ function makeMantaRayButton() {
   mantaRayButton.locate( width * (1/32) - mantaRayButton.width * (1/32), height * (1/3) - mantaRayButton.height * (1/3));
 
   // // Clickable callback functions, defined below
-  mantaRayButton.onPress = goToCoralReefButtonPressed;
+  mantaRayButton.onPress = mantaRayButtonPressed;
   mantaRayButton.onHover = beginButtonHover;
   mantaRayButton.onOutside = animalButtonOnOutside;
 }
 
 animalButtonOnOutside = function () {
   this.color = "#00000000";
+}
+
+mantaRayButtonPressed = function () {
+  drawFunction = rayPage; 
 }
 
 function makeBackButton() {
@@ -694,6 +715,50 @@ turtlePage = function(){
   backButton.draw(); 
 }
 
+rayPage = function(){
+  image(images[35], 0, 0, width, height);
+  image(images[16], width * (1/16) - 60, height * (1/16), 260, 200);
+
+
+  spongebob.visible = false; 
+  octopus.visible = false;
+  crab.visible = false; 
+
+  for(var i = 0; i < rayGroup.length; i++){
+    var sprite = rayGroup[i]; 
+    sprite.addSpeed(.1, 90); 
+
+    if(sprite.position.y > height + 100){
+      sprite.remove(); 
+    }
+  }
+
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
+  drawSprites(); 
+  backButton.draw(); 
+}
+
+crabPage = function(){
+  image(images[33], 0, 0, width, height);
+
+  spongebob.visible = false; 
+  octopus.visible = false;
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
+  if(mouseIsPressed){
+    crab.visible = false; 
+  } else{
+    crab.visible = true; 
+  }
+  drawSprites(); 
+  backButton.draw(); 
+}
+
 clownfishPage = function(){
   image(images[31], 0, 0, width, height);
   image(images[20], width * (1/16) - 60, height * (1/16), 260, 200);
@@ -709,6 +774,7 @@ clownfishPage = function(){
 
   spongebob.visible = false; 
   octopus.visible = false; 
+  crab.visible = false; 
 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
@@ -723,8 +789,8 @@ octopusPage = function(){
   image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
   spongebob.visible = false; 
   octopus.visible = true; 
+  crab.visible = false; 
   octopus.velocity.y += gravity; 
-  print('The value of octopus velocity is ' + octopus.velocity.y);
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -736,7 +802,8 @@ jellyfishPage = function(){
   image(images[25], 0, 0, width, height);
   image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
   spongebob.visible = true; 
-  octopus.visible = false; 
+  octopus.visible = false;
+  crab.visible = false;  
   spongebob.velocity.x = (mouseX - spongebob.position.x)/10; 
   spongebob.velocity.y = (mouseY - spongebob.position.y)/10; 
   jellyfishGroup.overlap(spongebob, collect); 
@@ -752,6 +819,14 @@ function collect(sprite)
   sprite.remove();
 }
 
+function mousePressed(){
+  if(drawFunction === crabPage){
+    var mrKrabs = createSprite(width * (1/2) - 150, height *(3/4)); 
+    mrKrabs.addAnimation('normal', images[34], images[34]); 
+
+    mrKrabs.life = 20; 
+  }
+}
 
 function keyPressed(){
   if (drawFunction === turtlePage){
@@ -789,6 +864,15 @@ function keyPressed(){
       clownfishGroup.add(clownfishSingle); 
     }
   }
+  else if(drawFunction === rayPage){
+    if(keyCode === UP_ARROW){
+      for(var i = 0; i < 5; i++){
+        var raySingle = createSprite(random(0,width), 0);
+        raySingle.addAnimation('normal',images[36],images[36]);  
+        rayGroup.add(raySingle); 
+      }
+    }
+  }
 }
 
 
@@ -799,12 +883,10 @@ function keyTyped() {
     }
     else if(key === 'b'){
       bleached++;  
-      print('the width is' + width + "the height is: " + height);
       drawFunction = questionTwo;
     }
     else if(key === 'c'){
       bleached++;  
-      print('The value of bleached is ' + bleached);
       drawFunction = questionTwo;
     }
     else if(key === 'd'){
