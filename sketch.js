@@ -47,6 +47,7 @@ var clownfishGroup;
 var octopus; 
 var platform; 
 var crab; 
+var shark; 
 
 var gravity = 1; 
 var jump = 15; 
@@ -93,6 +94,8 @@ function preload() {
   images[37] = loadImage('assets/dolphin page.png'); 
   images[38] = loadImage('assets/dolphin cartoon.png');
   images[39] = loadImage('assets/bubbles.png');
+  images[40] = loadImage('assets/shark page.png');
+  images[41] = loadImage('assets/cartoon shark.png'); 
 }
 
 function setup() {
@@ -116,11 +119,15 @@ function setup() {
 
   crab = createSprite(width * (1/2) - 150, height *(3/4)); 
   images[22].resize(430,300); 
-  crab.addAnimation('normal', images[22], images[22])
+  crab.addAnimation('normal', images[22], images[22]); 
 
   images[34].resize(250,250); 
 
   images[39].resize(75, 150); 
+
+  shark = createSprite(width * (1/2) - 50, height *(14/16)); 
+  images[41].resize(224, 224); 
+  shark.addAnimation('normal', images[41], images[41]); 
 
 
 
@@ -176,9 +183,13 @@ function makeWhaleSharkButton() {
   whaleSharkButton.locate( width * (31/32) - whaleSharkButton.width * (31/32), height * (1/128) - whaleSharkButton.height * (1/128));
 
   // // Clickable callback functions, defined below
-  whaleSharkButton.onPress = goToCoralReefButtonPressed;
+  whaleSharkButton.onPress = whaleSharkButtonPressed;
   whaleSharkButton.onHover = beginButtonHover;
   whaleSharkButton.onOutside = animalButtonOnOutside;
+}
+
+whaleSharkButtonPressed = function () {
+  drawFunction = sharkPage; 
 }
 
 
@@ -725,6 +736,32 @@ turtlePage = function(){
   backButton.draw(); 
 }
 
+sharkPage = function(){
+  image(images[40], 0, 0, width, height);
+  image(images[23], width * (1/16) - 60, height * (1/16), 200, 275);
+
+  if(keyIsDown(UP_ARROW)){
+    shark.scale += 0.05;
+  }
+  
+  if(keyIsDown(DOWN_ARROW)){
+    shark.scale -= 0.05; 
+  }
+
+
+  spongebob.visible = false; 
+  octopus.visible = false;
+  crab.visible = false; 
+  shark.visible = true; 
+
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
+  drawSprites(); 
+  backButton.draw(); 
+}
+
 rayPage = function(){
   image(images[35], 0, 0, width, height);
   image(images[16], width * (1/16) - 60, height * (1/16), 260, 200);
@@ -733,6 +770,7 @@ rayPage = function(){
   spongebob.visible = false; 
   octopus.visible = false;
   crab.visible = false; 
+  shark.visible = false; 
 
   for(var i = 0; i < rayGroup.length; i++){
     var sprite = rayGroup[i]; 
@@ -756,6 +794,8 @@ crabPage = function(){
 
   spongebob.visible = false; 
   octopus.visible = false;
+  shark.visible = false; 
+
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -778,6 +818,7 @@ dolphinPage = function(){
   spongebob.visible = false; 
   octopus.visible = false;
   crab.visible = false; 
+  shark.visible = false; 
 
   for(var i = 0; i < bubbleGroup.length; i++){
     var sprite = bubbleGroup[i]; 
@@ -812,6 +853,7 @@ clownfishPage = function(){
   spongebob.visible = false; 
   octopus.visible = false; 
   crab.visible = false; 
+  shark.visible = false; 
 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
@@ -824,9 +866,11 @@ clownfishPage = function(){
 octopusPage = function(){
   image(images[28], 0, 0, width, height);
   image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
+
   spongebob.visible = false; 
   octopus.visible = true; 
   crab.visible = false; 
+  shark.visible = false; 
   octopus.velocity.y += gravity; 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
@@ -838,9 +882,12 @@ octopusPage = function(){
 jellyfishPage = function(){
   image(images[25], 0, 0, width, height);
   image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
+
   spongebob.visible = true; 
   octopus.visible = false;
   crab.visible = false;  
+  shark.visible = false; 
+
   spongebob.velocity.x = (mouseX - spongebob.position.x)/10; 
   spongebob.velocity.y = (mouseY - spongebob.position.y)/10; 
   jellyfishGroup.overlap(spongebob, collect); 
