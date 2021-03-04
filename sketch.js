@@ -90,6 +90,9 @@ function preload() {
   images[34] = loadImage('assets/mr.krabs.png'); 
   images[35] = loadImage('assets/ray page.png'); 
   images[36] = loadImage('assets/mini ray.png'); 
+  images[37] = loadImage('assets/dolphin page.png'); 
+  images[38] = loadImage('assets/dolphin cartoon.png');
+  images[39] = loadImage('assets/bubbles.png');
 }
 
 function setup() {
@@ -117,11 +120,14 @@ function setup() {
 
   images[34].resize(250,250); 
 
+  images[39].resize(75, 150); 
+
 
 
   jellyfishGroup = new Group(); 
   clownfishGroup = new Group(); 
-  rayGroup = new Group(); 
+  rayGroup = new Group();
+  bubbleGroup = new Group(); 
 
   drawFunction = start; 
 
@@ -323,9 +329,13 @@ function makeDolphinButton() {
   dolphinButton.locate( width * (1/2) - dolphinButton.width * (1/2), height * (1/4) - dolphinButton.height * (1/4));
 
   // // Clickable callback functions, defined below
-  dolphinButton.onPress = goToCoralReefButtonPressed;
+  dolphinButton.onPress = dolphinButtonPressed;
   dolphinButton.onHover = beginButtonHover;
   dolphinButton.onOutside = animalButtonOnOutside;
+}
+
+dolphinButtonPressed = function () {
+  drawFunction = dolphinPage; 
 }
 
 function makeTurtleButton() {
@@ -759,6 +769,33 @@ crabPage = function(){
   backButton.draw(); 
 }
 
+dolphinPage = function(){
+  image(images[37], 0, 0, width, height);
+  image(images[18], width * (1/16) - 60, height * (1/16), 260, 200);
+  image(images[38], width * (1/2) - 40, height * (3/4), 250, 125);
+
+
+  spongebob.visible = false; 
+  octopus.visible = false;
+  crab.visible = false; 
+
+  for(var i = 0; i < bubbleGroup.length; i++){
+    var sprite = bubbleGroup[i]; 
+    sprite.addSpeed(.1, 270); 
+
+    if(sprite.position.y < 0){
+      sprite.remove(); 
+    }
+  }
+
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
+  drawSprites(); 
+  backButton.draw(); 
+}
+
 clownfishPage = function(){
   image(images[31], 0, 0, width, height);
   image(images[20], width * (1/16) - 60, height * (1/16), 260, 200);
@@ -871,6 +908,13 @@ function keyPressed(){
         raySingle.addAnimation('normal',images[36],images[36]);  
         rayGroup.add(raySingle); 
       }
+    }
+  }
+  else if(drawFunction === dolphinPage){
+    if(keyCode === UP_ARROW){
+      var bubbleSingle = createSprite(width * (1/2) + 120, height * (3/4));
+      bubbleSingle.addAnimation('normal',images[39],images[39]);  
+      bubbleGroup.add(bubbleSingle); 
     }
   }
 }
