@@ -2,21 +2,18 @@
 // 	Project1 
 // 	by Sophia Ladwiniec
 
-//
+//You will be guided at first through a quick questionnaire to bring awareness to your typical daily activites. 
+//Don't worry not everyone is perfect these questions are just to shed light on how what you are doing everyday could easily change to help our coral reefs! 
+//After that it will show you how your daily tasks can affect coral reefs. 
+//The last portion is an interactive reef that will allow you to learn more about coral reefs and learn about the animals in coral reefs. 
 // ------------------------------------------------------------------------------------
 // ***********************************************************************************/
 
 // // Array of images
 var images = [];
 
-// var beginButton; 
-
 // variable that is a function 
 var drawFunction;
-
-// keeps track of answers 
-var bleached = 0; 
-
 
 //Clickable objects
 var beginButton;
@@ -35,13 +32,8 @@ var octopusButton;
 var crabButton; 
 var whaleSharkButton; 
 
-
-var turtleX = 1500 * (1/32) - 30; 
-var turtleY = 850 * (1/32) - 90; 
-
-// sprites for mini games 
+// sprites for mini animations on each page 
 var spongebob; 
-var jellyfish; 
 var jellyfishGroup; 
 var clownfishGroup; 
 var octopus; 
@@ -49,8 +41,14 @@ var platform;
 var crab; 
 var shark; 
 
+// global variables for jumping octopus 
 var gravity = 1; 
 var jump = 15; 
+// specific coordinates for the turtle being able to move
+var turtleX = 1500 * (1/32) - 30; 
+var turtleY = 850 * (1/32) - 90;
+// keeps track of user's answers to determine if their reef is bleached 
+var bleached = 0;  
 
 // load all images into an array
 function preload() {
@@ -98,9 +96,11 @@ function preload() {
   images[41] = loadImage('assets/cartoon shark.png'); 
 }
 
+// setup function which helps me resize images, create groups, and also create the animations 
 function setup() {
   createCanvas(1500, 850);
 
+  // creating animations and resizing images that are specific to certain animations 
   spongebob = createSprite(100, 100);
   images[26].resize(300,300); 
   spongebob.addAnimation('normal',images[26],images[26]); 
@@ -130,14 +130,16 @@ function setup() {
   shark.addAnimation('normal', images[41], images[41]); 
 
 
-
+  // creating groups for the animations that need multiple sprites 
   jellyfishGroup = new Group(); 
   clownfishGroup = new Group(); 
   rayGroup = new Group();
   bubbleGroup = new Group(); 
 
+  // having the draw function start at the start page 
   drawFunction = start; 
 
+  // making all my clickable buttons for each page 
   makeBeginButton();
   makeCoralReefButton(); 
   makeGoToCoralReefButton(); 
@@ -155,12 +157,13 @@ function setup() {
   makeWhaleSharkButton(); 
 }
 
-// Just draw the button
+// draw function 
 function draw() {
   background(128);
   drawFunction(); 
 }
 
+// function that makes the whale shark button in the interactive reef 
 function makeWhaleSharkButton() {
 
   // Create the clickable object
@@ -170,29 +173,29 @@ function makeWhaleSharkButton() {
 
   whaleSharkButton.image = images[23]; 
 
-  // // This would give it a white background
+  //makes the button color transparent 
   whaleSharkButton.color = "#00000000";
   whaleSharkButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  //set width + height to image size
   whaleSharkButton.width = 270; 
   whaleSharkButton.height = 390;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // placing the button on the page 
   whaleSharkButton.locate( width * (31/32) - whaleSharkButton.width * (31/32), height * (1/128) - whaleSharkButton.height * (1/128));
 
-  // // Clickable callback functions, defined below
+  // // Clickable callback functions for the whaleshark button , defined below
   whaleSharkButton.onPress = whaleSharkButtonPressed;
   whaleSharkButton.onHover = beginButtonHover;
   whaleSharkButton.onOutside = animalButtonOnOutside;
 }
 
+// when this button is pressed it will take you to the sharkpage 
 whaleSharkButtonPressed = function () {
   drawFunction = sharkPage; 
 }
 
-
+// function that makes the crab button in the interactive reef 
 function makeCrabButton() {
 
   // Create the clickable object
@@ -202,16 +205,15 @@ function makeCrabButton() {
 
   crabButton.image = images[22]; 
 
-  // // This would give it a white background
+  // gives the button a transparent background and changes the stroke to 0 
   crabButton.color = "#00000000";
   crabButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  //set width + height to image size
   crabButton.width = 280; 
   crabButton.height = 120;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // placing the button on the page 
   crabButton.locate( width * (31/32) - crabButton.width * (31/32), height * (26/32) - crabButton.height * (26/32));
 
   // // Clickable callback functions, defined below
@@ -220,10 +222,12 @@ function makeCrabButton() {
   crabButton.onOutside = animalButtonOnOutside;
 }
 
+// when this button is pressed it will take you to the crabpage 
 crabButtonPressed = function () {
   drawFunction = crabPage; 
 }
 
+// function that makes the octopus button in the interactive reef 
 function makeOctopusButton() {
 
   // Create the clickable object
@@ -241,8 +245,7 @@ function makeOctopusButton() {
   octopusButton.width = 290; 
   octopusButton.height = 160;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button 
   octopusButton.locate( width * (13/16) - octopusButton.width * (13/16), height * (1/2) - octopusButton.height * (1/2));
 
   // // Clickable callback functions, defined below
@@ -251,10 +254,12 @@ function makeOctopusButton() {
   octopusButton.onOutside = animalButtonOnOutside;
 }
 
+// this button will take you to the octopus page 
 octopusButtonPressed = function () {
   drawFunction = octopusPage; 
 }
 
+// function that creates the clownfish button in the interactive reef 
 function makeClownfishButton() {
 
   // Create the clickable object
@@ -264,28 +269,29 @@ function makeClownfishButton() {
 
   clownfishButton.image = images[20]; 
 
-  // // This would give it a white background
+  // makes the button's background transparent 
   clownfishButton.color = "#00000000";
   clownfishButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  // set width + height to image size
   clownfishButton.width = 200; 
   clownfishButton.height = 100;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   clownfishButton.locate( width * (3/4) - clownfishButton.width * (3/4), height * (12/16) - clownfishButton.height * (12/16));
 
-  // // Clickable callback functions, defined below
+  //Clickable callback functions, defined below
   clownfishButton.onPress = clownfishButtonPressed;
   clownfishButton.onHover = beginButtonHover;
   clownfishButton.onOutside = animalButtonOnOutside;
 }
 
+// this button takes you to the clownfish page 
 clownfishButtonPressed = function () {
   drawFunction = clownfishPage; 
 }
 
+// function that makes the jellyfish button 
 function makeJellyfishButton() {
 
   // Create the clickable object
@@ -295,7 +301,7 @@ function makeJellyfishButton() {
 
   jellyfishButton.image = images[19]; 
 
-  // // This would give it a white background
+  // makes the image have a transparent background 
   jellyfishButton.color = "#00000000";
   jellyfishButton.strokeWeight = 0; 
 
@@ -303,8 +309,7 @@ function makeJellyfishButton() {
   jellyfishButton.width = 278; 
   jellyfishButton.height = 120;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   jellyfishButton.locate( width * (1/2) - jellyfishButton.width * (1/2), height * (3/4) - jellyfishButton.height * (3/4));
 
   // // Clickable callback functions, defined below
@@ -313,11 +318,12 @@ function makeJellyfishButton() {
   jellyfishButton.onOutside = animalButtonOnOutside;
 }
 
+// takes you to the jellyfish page when pressed 
 jellyfishButtonPressed = function () {
   drawFunction = jellyfishPage; 
 }
 
-
+// function that creates the dolphin button on the interactive reef 
 function makeDolphinButton() {
 
   // Create the clickable object
@@ -327,28 +333,29 @@ function makeDolphinButton() {
 
   dolphinButton.image = images[18]; 
 
-  // // This would give it a white background
+  // gives the dolphin a transparent background 
   dolphinButton.color = "#00000000";
   dolphinButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  // set width + height to image size
   dolphinButton.width = 401; 
   dolphinButton.height = 266;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button 
   dolphinButton.locate( width * (1/2) - dolphinButton.width * (1/2), height * (1/4) - dolphinButton.height * (1/4));
 
-  // // Clickable callback functions, defined below
+  // Clickable callback functions, defined below
   dolphinButton.onPress = dolphinButtonPressed;
   dolphinButton.onHover = beginButtonHover;
   dolphinButton.onOutside = animalButtonOnOutside;
 }
 
+// takes you to the dolphin page when pressed 
 dolphinButtonPressed = function () {
   drawFunction = dolphinPage; 
 }
 
+// function that creates the turtle button in the interactive reef 
 function makeTurtleButton() {
 
   // Create the clickable object
@@ -358,16 +365,15 @@ function makeTurtleButton() {
 
   turtleButton.image = images[17]; 
 
-  // // This would give it a white background
+  // this makes the turtle's background transparent 
   turtleButton.color = "#00000000";
   turtleButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  // set width + height to image size
   turtleButton.width = 317; 
   turtleButton.height = 211;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   turtleButton.locate( width * (1/32) - turtleButton.width * (1/32), height * (13/16) - turtleButton.height * (13/16));
 
   // // Clickable callback functions, defined below
@@ -376,10 +382,12 @@ function makeTurtleButton() {
   turtleButton.onOutside = animalButtonOnOutside;
 }
 
+// takes you to the turtle page 
 turtleButtonPressed = function () {
   drawFunction = turtlePage; 
 }
 
+// function makes the MantaRayButton on the interactive reef 
 function makeMantaRayButton() {
 
   // Create the clickable object
@@ -389,16 +397,15 @@ function makeMantaRayButton() {
 
   mantaRayButton.image = images[16]; 
 
-  // // This would give it a white background
+  // gives the Manta ray a transparent background 
   mantaRayButton.color = "#00000000";
   mantaRayButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  // set width + height to image size
   mantaRayButton.width = 242; 
   mantaRayButton.height = 156;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   mantaRayButton.locate( width * (1/32) - mantaRayButton.width * (1/32), height * (1/3) - mantaRayButton.height * (1/3));
 
   // // Clickable callback functions, defined below
@@ -407,41 +414,43 @@ function makeMantaRayButton() {
   mantaRayButton.onOutside = animalButtonOnOutside;
 }
 
+// function for every animal button to make sure that the background stays transparent 
 animalButtonOnOutside = function () {
   this.color = "#00000000";
 }
 
+// takes you to the ray page 
 mantaRayButtonPressed = function () {
   drawFunction = rayPage; 
 }
 
+// function that creates the back button used throughout the project 
 function makeBackButton() {
 
   // Create the clickable object
   backButton = new Clickable();
   
+  // back button text 
   backButton.text = "Back";
   backButton.textColor = "#365673"; 
   backButton.textSize = 25; 
 
-
-  // // This would give it a white background
   backButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   backButton.width = 100;
   backButton.height = 40;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button in the same location on every page it is used 
   backButton.locate( width * (1/32) , height * (15/16));
 
-  // // Clickable callback functions, defined below
+  // Clickable callback functions, defined below
   backButton.onPress = goToCoralReefButtonPressed;
   backButton.onHover = beginButtonHover;
   backButton.onOutside = beginButtonOnOutside;
 }
 
+// creates the help coral reef button on the interactive reef 
 function makeHelpButton() {
 
   // Create the clickable object
@@ -451,28 +460,27 @@ function makeHelpButton() {
   helpButton.textColor = "#365673"; 
   helpButton.textSize = 25; 
 
-
-  // // This would give it a white background
   helpButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   helpButton.width = 380;
   helpButton.height = 62;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   helpButton.locate( width * (23/32) , height * (7/8));
 
-  // // Clickable callback functions, defined below
+  // Clickable callback functions, defined below
   helpButton.onPress = helpButtonPressed;
   helpButton.onHover = beginButtonHover;
   helpButton.onOutside = beginButtonOnOutside;
 }
 
+// takes you to the help page when pressed 
 helpButtonPressed = function () {
   drawFunction = helpPage; 
 }
 
+// makes the learn more about bleaching button 
 function makeBleachingButton() {
 
   // Create the clickable object
@@ -482,16 +490,13 @@ function makeBleachingButton() {
   bleachingButton.textColor = "#365673"; 
   bleachingButton.textSize = 25; 
 
-
-  // // This would give it a white background
   bleachingButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   bleachingButton.width = 380;
   bleachingButton.height = 62;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   bleachingButton.locate( width * (12/32) , height * (7/8));
 
   // // Clickable callback functions, defined below
@@ -500,10 +505,12 @@ function makeBleachingButton() {
   bleachingButton.onOutside = beginButtonOnOutside;
 }
 
+// takes you to the what is bleaching page 
 bleachingButtonPressed = function () {
   drawFunction = whatIsBleaching; 
 }
 
+// function that makes the coral reef importance button 
 function makeCoralImportanceButton() {
 
   // Create the clickable object
@@ -513,16 +520,13 @@ function makeCoralImportanceButton() {
   coralImportanceButton.textColor = "#365673"; 
   coralImportanceButton.textSize = 25; 
 
-
-  // // This would give it a white background
   coralImportanceButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   coralImportanceButton.width = 380;
   coralImportanceButton.height = 62;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button 
   coralImportanceButton.locate( width * (1/32) , height * (7/8));
 
   // // Clickable callback functions, defined below
@@ -531,10 +535,12 @@ function makeCoralImportanceButton() {
   coralImportanceButton.onOutside = beginButtonOnOutside;
 }
 
+// takes you to the coral reef importance page 
 coralImportanceButtonPressed = function () {
   drawFunction = coralReefImportance; 
 }
 
+// makes the go to coral reef button found after you find out which reef your daily life choices causes 
 function makeGoToCoralReefButton() {
 
   // Create the clickable object
@@ -544,28 +550,27 @@ function makeGoToCoralReefButton() {
   goToCoralReefButton.textColor = "#365673"; 
   goToCoralReefButton.textSize = 37; 
 
-
-  // // This would give it a white background
   goToCoralReefButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   goToCoralReefButton.width = 739;
   goToCoralReefButton.height = 84;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places button on the page 
   goToCoralReefButton.locate( width/2 - goToCoralReefButton.width/2 , height * (3/4));
 
-  // // Clickable callback functions, defined below
+  //Clickable callback functions, defined below
   goToCoralReefButton.onPress = goToCoralReefButtonPressed;
   goToCoralReefButton.onHover = beginButtonHover;
   goToCoralReefButton.onOutside = beginButtonOnOutside;
 }
 
+// takes you to the interactive reef 
 goToCoralReefButtonPressed = function () {
   drawFunction = coralReef; 
 }
 
+// makes the coral reef button that allows you to see the coral reef you generated 
 function makeCoralReefButton() {
 
   // Create the clickable object
@@ -575,16 +580,13 @@ function makeCoralReefButton() {
   coralReefButton.textColor = "#365673"; 
   coralReefButton.textSize = 37; 
 
-
-  // // This would give it a white background
   coralReefButton.color = "#8FD9CB";
 
-  // // set width + height to image size
+  // set width + height to image size
   coralReefButton.width = 994;
   coralReefButton.height = 90;
 
-  // // set to middle of screen, since we are drawing from the corners, we need to make an
-  // // additional calculation here
+  // places the button on the page 
   coralReefButton.locate( width/2 - coralReefButton.width/2 , height * (3/4));
 
   // // Clickable callback functions, defined below
@@ -593,8 +595,8 @@ function makeCoralReefButton() {
   coralReefButton.onOutside = beginButtonOnOutside;
 }
 
+// takes you to the reeef you created based on the amount of points you received for bleaching 
 coralReefButtonPressed = function () {
-  print('The value of bleached is ' + bleached);
   if(bleached <= 7 && bleached >= 5){
     drawFunction = bleachedReef; 
   } else if(bleached <= 4 && bleached >= 2){
@@ -605,6 +607,7 @@ coralReefButtonPressed = function () {
   }
 }
 
+// makes the start button on the start page 
 function makeBeginButton() {
 
   // Create the clickable object
@@ -614,16 +617,13 @@ function makeBeginButton() {
   beginButton.textColor = "#365673"; 
   beginButton.textSize = 37; 
 
-
-  // This would give it a white background
   beginButton.color = "#8FD9CB";
 
   // set width + height to image size
   beginButton.width = 434;
   beginButton.height = 97;
 
-  // set to middle of screen, since we are drawing from the corners, we need to make an
-  // additional calculation here
+  // places button on the page 
   beginButton.locate( width/2 - beginButton.width/2 , height * (3/4));
 
   // Clickable callback functions, defined below
@@ -632,12 +632,12 @@ function makeBeginButton() {
   beginButton.onOutside = beginButtonOnOutside;
 }
 
-// Meow alert box when pressed (mouse down)
+// when clicked takes you to question one 
 beginButtonPressed = function () {
   drawFunction = questionOne; 
 }
 
-// tint when mouse is over
+// when the mouse hovers any button it chooses this color 
 beginButtonHover = function () {
   this.color = "#F29199";
 }
@@ -647,59 +647,72 @@ beginButtonOnOutside = function () {
   this.color = "#8FD9CB";
 }
 
+// function that takes you to the start page 
 start = function() {
    image(images[0], 0, 0, width, height);
    beginButton.draw();
 }
 
+// function that asks question one 
 questionOne = function() {
    image(images[1], 0, 0, width, height);
 }
 
+// function that asks question two 
 questionTwo = function() {
    image(images[2], 0, 0, width, height);
 }
 
+// function that asks question three 
 questionThree = function() {
    image(images[3], 0, 0, width, height);
 }
 
+// function that asks question four
 questionFour = function() {
    image(images[4], 0, 0, width, height);
 }
 
+// function that asks question five 
 questionFive = function() {
    image(images[5], 0, 0, width, height);
 }
 
+// function that asks question six 
 questionSix = function() {
    image(images[6], 0, 0, width, height);
 }
 
+// function that asks question seven
 questionSeven = function() {
    image(images[7], 0, 0, width, height);
 }
 
+// function that takes you to the end of questions page 
 endOfQuestions = function() {
   image(images[8], 0, 0, width, height);
   coralReefButton.draw();
 }
 
+// function that takes you to a bleached reef 
 bleachedReef = function() {
   image(images[9], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
+// function that takes you to a somewhat bleached reef 
 somewhatBleachedReef = function() {
   image(images[10], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
+// function that takes you to a healthy reef 
 healthyReef = function() {
   image(images[11], 0, 0, width, height);
   goToCoralReefButton.draw(); 
 }
 
+// function that draws the interactive reef full of animal buttons 
 coralReef = function() {
   image(images[12], 0, 0, width, height);
   coralImportanceButton.draw();
@@ -715,45 +728,52 @@ coralReef = function() {
   whaleSharkButton.draw(); 
 }
 
+// function that draws the coral reef importance page 
 coralReefImportance = function(){
   image(images[13], 0, 0, width, height);
   backButton.draw(); 
 }
 
+// function that draws the what is bleaching apge 
 whatIsBleaching = function(){
   image(images[14], 0, 0, width, height);
   backButton.draw(); 
 }
 
+// function that draws the how you can help page 
 helpPage = function(){
   image(images[15], 0, 0, width, height);
   backButton.draw(); 
 }
 
+// function that draws the turtle page 
 turtlePage = function(){
   image(images[24], 0, 0, width, height);
   image(images[17], turtleX, turtleY, 400, 300); 
   backButton.draw(); 
 }
 
+// function that draws the shark page and also incorporates animations 
 sharkPage = function(){
   image(images[40], 0, 0, width, height);
   image(images[23], width * (1/16) - 60, height * (1/16), 200, 275);
 
-  if(keyIsDown(UP_ARROW)){
-    shark.scale += 0.05;
-  }
-  
-  if(keyIsDown(DOWN_ARROW)){
-    shark.scale -= 0.05; 
-  }
-
-
+  // sets the proper sprites to visible 
   spongebob.visible = false; 
   octopus.visible = false;
   crab.visible = false; 
   shark.visible = true; 
 
+  // makes the shark grow as the key up arrow is pressed 
+  if(keyIsDown(UP_ARROW)){
+    shark.scale += 0.05;
+  }
+  // makes the shark shrink as the key down arrow is pressed 
+  if(keyIsDown(DOWN_ARROW)){
+    shark.scale -= 0.05; 
+  }
+
+  // added this in because sprites keep doing their functions even when not visible 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -762,16 +782,18 @@ sharkPage = function(){
   backButton.draw(); 
 }
 
+// draws the ray page that uses animations 
 rayPage = function(){
   image(images[35], 0, 0, width, height);
   image(images[16], width * (1/16) - 60, height * (1/16), 260, 200);
 
-
+  // sets the proper sprites to visible 
   spongebob.visible = false; 
   octopus.visible = false;
   crab.visible = false; 
   shark.visible = false; 
 
+  // for loop that makes the rays fall down the page and removes them from the ray group 
   for(var i = 0; i < rayGroup.length; i++){
     var sprite = rayGroup[i]; 
     sprite.addSpeed(.1, 90); 
@@ -781,6 +803,7 @@ rayPage = function(){
     }
   }
 
+  // added this in because sprites keep doing their functions even when not visible 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -789,37 +812,44 @@ rayPage = function(){
   backButton.draw(); 
 }
 
+// function that draws the crab page 
 crabPage = function(){
   image(images[33], 0, 0, width, height);
 
+  // sets the proper sprites to visible
   spongebob.visible = false; 
   octopus.visible = false;
   shark.visible = false; 
 
-  if(octopus.collide(platform)){
-    octopus.velocity.y = 0; 
-  }
-
+  // if the mouse is pressed it hides the crab so that mr.krabs can show up once the mouse is pressed 
   if(mouseIsPressed){
     crab.visible = false; 
   } else{
     crab.visible = true; 
   }
+
+  // added this in because sprites keep doing their functions even when not visible 
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
   drawSprites(); 
   backButton.draw(); 
 }
 
+// function that draws the dolphin page and also includes animations 
 dolphinPage = function(){
   image(images[37], 0, 0, width, height);
   image(images[18], width * (1/16) - 60, height * (1/16), 260, 200);
   image(images[38], width * (1/2) - 40, height * (3/4), 250, 125);
 
-
+  // sets the proper sprites to visible 
   spongebob.visible = false; 
   octopus.visible = false;
   crab.visible = false; 
   shark.visible = false; 
 
+  // for loop that allows the bubbles from the dolphin to travel upward which are stored in the bubble group 
   for(var i = 0; i < bubbleGroup.length; i++){
     var sprite = bubbleGroup[i]; 
     sprite.addSpeed(.1, 270); 
@@ -829,6 +859,7 @@ dolphinPage = function(){
     }
   }
 
+  // added this in because sprites keep doing their functions even when not visible 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -837,10 +868,18 @@ dolphinPage = function(){
   backButton.draw(); 
 }
 
+// function that draws the clownfish page 
 clownfishPage = function(){
   image(images[31], 0, 0, width, height);
   image(images[20], width * (1/16) - 60, height * (1/16), 260, 200);
 
+  // function that makes the proper sprites visible 
+  spongebob.visible = false; 
+  octopus.visible = false; 
+  crab.visible = false; 
+  shark.visible = false; 
+
+  // for loop that allows the clownfish that are created to fall downwards 
   for(var i = 0; i < clownfishGroup.length; i++){
     var sprite = clownfishGroup[i]; 
     sprite.addSpeed(.1, 90); 
@@ -850,11 +889,7 @@ clownfishPage = function(){
     }
   }
 
-  spongebob.visible = false; 
-  octopus.visible = false; 
-  crab.visible = false; 
-  shark.visible = false; 
-
+  // added this in because sprites keep doing their functions even when not visibl
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
@@ -863,46 +898,62 @@ clownfishPage = function(){
   backButton.draw();
 }
 
+// function that draws the octopus page 
 octopusPage = function(){
   image(images[28], 0, 0, width, height);
   image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
 
+  // sets the proper sprites to visble 
   spongebob.visible = false; 
   octopus.visible = true; 
   crab.visible = false; 
-  shark.visible = false; 
+  shark.visible = false;
+
+  // changes the octopuses gravity, ultimately allowing it to fall after it jumps up 
   octopus.velocity.y += gravity; 
+
+  // when the octopus is touching the platform it's velocity will be 0 
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
+
   drawSprites(); 
   backButton.draw(); 
 }
 
+// function that draws the jellyfish page 
 jellyfishPage = function(){
   image(images[25], 0, 0, width, height);
   image(images[19], width * (1/16) - 60, height * (1/16), 400, 200);
 
+  // sets the proper sprites to visible 
   spongebob.visible = true; 
   octopus.visible = false;
   crab.visible = false;  
   shark.visible = false; 
 
+  // allows spongebob to follow your mouse throughout the page 
   spongebob.velocity.x = (mouseX - spongebob.position.x)/10; 
   spongebob.velocity.y = (mouseY - spongebob.position.y)/10; 
+
+  // if spongebob touches a jellyfish it will collect it, callback function for collect 
   jellyfishGroup.overlap(spongebob, collect); 
+
+  // added this in because sprites keep doing their functions even when not visibl
   if(octopus.collide(platform)){
     octopus.velocity.y = 0; 
   }
+
   drawSprites(); 
   backButton.draw(); 
 }
 
-function collect(sprite)
-{
+// function that removes whatever jellyfish were collected by spongebob from the jellyfish group 
+function collect(sprite){
   sprite.remove();
 }
 
+// specifically for the mr. krabs on the crab page, it will show mr. krabs when you press down for a couple seconds 
 function mousePressed(){
   if(drawFunction === crabPage){
     var mrKrabs = createSprite(width * (1/2) - 150, height *(3/4)); 
@@ -912,7 +963,9 @@ function mousePressed(){
   }
 }
 
+// separated into two functions, this function is specific to any keys that are pressed for animations 
 function keyPressed(){
+  // allows the turtle to move with the arrow keys 
   if (drawFunction === turtlePage){
     if(keyCode === UP_ARROW){
       turtleY = turtleY - 30; 
@@ -927,6 +980,7 @@ function keyPressed(){
       turtleX = turtleX - 30; 
     }
   }
+  // creates 10 jellyfish when the user pressed the up arrow 
   else if (drawFunction === jellyfishPage){
     if(keyCode === UP_ARROW){
       for(var i = 0; i < 20; i++){
@@ -936,11 +990,13 @@ function keyPressed(){
       }
     }
   }
+  // allows the octopus to jump when the user pressed their up arrow 
   else if (drawFunction === octopusPage){
     if(keyCode === UP_ARROW){
       octopus.velocity.y = -jump; 
     }
   }
+  // allows clownfish to be created at the user's cursor when they press the up arrow 
   else if(drawFunction === clownfishPage){
     if(keyCode === UP_ARROW){
       var clownfishSingle = createSprite(mouseX, mouseY);
@@ -948,6 +1004,7 @@ function keyPressed(){
       clownfishGroup.add(clownfishSingle); 
     }
   }
+  // creates 5 random rays that fall from the sky on the ray page 
   else if(drawFunction === rayPage){
     if(keyCode === UP_ARROW){
       for(var i = 0; i < 5; i++){
@@ -957,6 +1014,7 @@ function keyPressed(){
       }
     }
   }
+  // allows the dolphin to blow bubbles from it's spout when the user pressed the up arrow 
   else if(drawFunction === dolphinPage){
     if(keyCode === UP_ARROW){
       var bubbleSingle = createSprite(width * (1/2) + 120, height * (3/4));
@@ -966,7 +1024,7 @@ function keyPressed(){
   }
 }
 
-
+// this functions is specific to the questionnaire portion and allows for the user to change states easily 
 function keyTyped() {
   if (drawFunction === questionOne){
     if(key === 'a'){
