@@ -14,4 +14,4 @@ To plan this project I used Adobe Xd to plan out each state and as well what ite
 [Here is the link to the Adobe Xd](https://xd.adobe.com/view/afd1884d-192f-4290-88ff-b5d478d33c02-fa82/)
 
 For this project I used p5.js. I implemented two libraries as well those being the play library and clickable library. For the play library I implemented it in order to make animations on each animal page in my project. For the clickable library I implemented it inorder to allow buttons to be clickable objects and allow for changes of states. In addition to these two libraries I used arrays, global and local variables, groups, and callback functions. 
-[Here is a live link as well] (http://xarts.usfca.edu/~slladwiniec/CoralReefs/)
+[Here is a live link as well](http://xarts.usfca.edu/~slladwiniec/CoralReefs/)
