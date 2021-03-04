@@ -43,6 +43,7 @@ var turtleY = 850 * (1/32) - 90;
 var spongebob; 
 var jellyfish; 
 var jellyfishGroup; 
+var clownfishGroup; 
 var octopus; 
 var platform; 
 
@@ -80,8 +81,10 @@ function preload() {
   images[26] = loadImage('assets/spongebob jellyfishing.png'); 
   images[27] = loadImage('assets/cartoon jellyfish.png'); 
   images[28] = loadImage('assets/octopus page.png'); 
-  images[29] = loadImage('assets/octopus cartoon.png')
-  images[30] = loadImage('assets/platform.png')
+  images[29] = loadImage('assets/octopus cartoon.png');
+  images[30] = loadImage('assets/platform.png');
+  images[31] = loadImage('assets/fish page.png'); 
+  images[32] = loadImage('assets/nemo.png');
 }
 
 function setup() {
@@ -99,9 +102,13 @@ function setup() {
 
   platform = createSprite(width * (1/2) - 150, 950); 
   images[30].resize(200,90); 
-  platform.addAnimation('normal', images[30], images[30]); 
+  platform.addAnimation('normal', images[30], images[30]);
+
+  images[32].resize(130,97); 
+
 
   jellyfishGroup = new Group(); 
+  clownfishGroup = new Group(); 
 
   drawFunction = start; 
 
@@ -236,9 +243,13 @@ function makeClownfishButton() {
   clownfishButton.locate( width * (3/4) - clownfishButton.width * (3/4), height * (12/16) - clownfishButton.height * (12/16));
 
   // // Clickable callback functions, defined below
-  clownfishButton.onPress = goToCoralReefButtonPressed;
+  clownfishButton.onPress = clownfishButtonPressed;
   clownfishButton.onHover = beginButtonHover;
   clownfishButton.onOutside = animalButtonOnOutside;
+}
+
+clownfishButtonPressed = function () {
+  drawFunction = clownfishPage; 
 }
 
 function makeJellyfishButton() {
@@ -683,6 +694,30 @@ turtlePage = function(){
   backButton.draw(); 
 }
 
+clownfishPage = function(){
+  image(images[31], 0, 0, width, height);
+  image(images[20], width * (1/16) - 60, height * (1/16), 260, 200);
+
+  for(var i = 0; i < clownfishGroup.length; i++){
+    var sprite = clownfishGroup[i]; 
+    sprite.addSpeed(.1, 90); 
+
+    if(sprite.position.y > height + 100){
+      sprite.remove(); 
+    }
+  }
+
+  spongebob.visible = false; 
+  octopus.visible = false; 
+
+  if(octopus.collide(platform)){
+    octopus.velocity.y = 0; 
+  }
+
+  drawSprites(); 
+  backButton.draw();
+}
+
 octopusPage = function(){
   image(images[28], 0, 0, width, height);
   image(images[21], width * (1/16) - 60, height * (1/16), 300, 160);
@@ -717,6 +752,7 @@ function collect(sprite)
   sprite.remove();
 }
 
+
 function keyPressed(){
   if (drawFunction === turtlePage){
     if(keyCode === UP_ARROW){
@@ -744,6 +780,13 @@ function keyPressed(){
   else if (drawFunction === octopusPage){
     if(keyCode === UP_ARROW){
       octopus.velocity.y = -jump; 
+    }
+  }
+  else if(drawFunction === clownfishPage){
+    if(keyCode === UP_ARROW){
+      var clownfishSingle = createSprite(mouseX, mouseY);
+      clownfishSingle.addAnimation('normal',images[32],images[32]);  
+      clownfishGroup.add(clownfishSingle); 
     }
   }
 }
