@@ -214,7 +214,7 @@ function makeCrabButton() {
   crabButton.height = 120;
 
   // placing the button on the page 
-  crabButton.locate( width * (31/32) - crabButton.width * (31/32), height * (26/32) - crabButton.height * (26/32));
+  crabButton.locate( width * (1/16) - crabButton.width * (1/16), height * (26/32) - crabButton.height * (26/32));
 
   // // Clickable callback functions, defined below
   crabButton.onPress = crabButtonPressed;
@@ -237,18 +237,18 @@ function makeOctopusButton() {
 
   octopusButton.image = images[21]; 
 
-  // // This would give it a white background
+  // makes the image transparent
   octopusButton.color = "#00000000";
   octopusButton.strokeWeight = 0; 
 
-  // // set width + height to image size
+  // set width + height to image size
   octopusButton.width = 290; 
   octopusButton.height = 160;
 
   // places the button 
   octopusButton.locate( width * (13/16) - octopusButton.width * (13/16), height * (1/2) - octopusButton.height * (1/2));
 
-  // // Clickable callback functions, defined below
+  // Clickable callback functions, defined below
   octopusButton.onPress = octopusButtonPressed;
   octopusButton.onHover = beginButtonHover;
   octopusButton.onOutside = animalButtonOnOutside;
@@ -278,7 +278,7 @@ function makeClownfishButton() {
   clownfishButton.height = 100;
 
   // places the button on the page 
-  clownfishButton.locate( width * (3/4) - clownfishButton.width * (3/4), height * (12/16) - clownfishButton.height * (12/16));
+  clownfishButton.locate( width * (1/16) - clownfishButton.width * (1/16), height * (10/16) - clownfishButton.height * (10/16));
 
   //Clickable callback functions, defined below
   clownfishButton.onPress = clownfishButtonPressed;
@@ -374,7 +374,7 @@ function makeTurtleButton() {
   turtleButton.height = 211;
 
   // places the button on the page 
-  turtleButton.locate( width * (1/32) - turtleButton.width * (1/32), height * (13/16) - turtleButton.height * (13/16));
+  turtleButton.locate( width * (15/16) - turtleButton.width * (15/16), height * (13/16) - turtleButton.height * (13/16));
 
   // // Clickable callback functions, defined below
   turtleButton.onPress = turtleButtonPressed;
@@ -523,7 +523,7 @@ function makeCoralImportanceButton() {
   coralImportanceButton.color = "#8FD9CB";
 
   // set width + height to image size
-  coralImportanceButton.width = 380;
+  coralImportanceButton.width = 420;
   coralImportanceButton.height = 62;
 
   // places the button 
@@ -1137,6 +1137,4 @@ function keyTyped() {
       drawFunction = endOfQuestions;
     }
   }
-
 }
-
